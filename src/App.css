@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.linkNavBar {
+  color: rgba(255, 255, 255, 0.55);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out background-color 0.15s ease-in-out
+    border-color 0.15s ease-in-out;
+}
+.linkNavBar:hover {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
