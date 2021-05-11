@@ -1,15 +1,18 @@
-import React, { useContext, useState, useEffect }  from 'react';
+import React, { useContext, useEffect }  from 'react';
 import { Link } from 'react-router-dom';
 import {AppContext} from '../Context.js'
 import {ListGroup} from 'react-bootstrap';
 import {findProduct} from '../lib/database'
 
 export function ListBasket (props){
-    const [state, setState] = useState({invoiceLines : []});
+    // const [state, setState] = useState();
     const context = useContext(AppContext);
-    
-    useEffect(() => {const invoiceLines = 
-        context.basket.map((basketItem) => {
+    let invoiceLines = [];
+
+    useEffect(() => {
+        invoiceLines = context.basket.map((basketItem) => {
+            
+            console.log(invoiceLines)
             /*
             L'objet basketItem contient deux propriétés :
             - Le code du produit à ajouter à la facture (productCode)
@@ -23,12 +26,9 @@ export function ListBasket (props){
             // Création d'une ligne de facturation regroupant les informations du produit et la quantité désirée.
             return { ...product, quantity: basketItem.quantity };
         });
-        console.log(state)
-        setState({ invoiceLines: invoiceLines });
-    }, [state])
+    }, [context]) 
 
         // Mise à jour du state complet (données de facturation puis les montants de la facture).
-
     return (
         <>
         <ListGroup horizontal>
@@ -38,12 +38,12 @@ export function ListBasket (props){
             <ListGroup.Item action variant="">Prix total</ListGroup.Item>
         </ListGroup>
         {context.basket.map((e)=>{
-        let myProduct = findProduct(e.productCode);
-        let priceProducts = myProduct.unitPrice*e.quantity;
-
+            let myProduct = findProduct(e.productCode);
+            let priceProducts = Math.round((myProduct.unitPrice*e.quantity)*10)/10;
+            
             return (
-                <ListGroup>
-                    <ListGroup horizontal key={e.productCode}>
+                <ListGroup key={e.productCode}>
+                    <ListGroup horizontal>
                         <ListGroup.Item action variant="dark"> {myProduct.description}</ListGroup.Item>
                         <ListGroup.Item action variant="dark">{e.quantity}</ListGroup.Item>
                         <ListGroup.Item action variant="dark"> {myProduct.unitPrice} €</ListGroup.Item>
@@ -51,10 +51,7 @@ export function ListBasket (props){
                     </ListGroup>
                 </ListGroup>
             )
-        
         })}
-        
-
         </>
     )
 }
