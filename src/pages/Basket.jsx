@@ -12,8 +12,10 @@ export class Basket extends React.Component {
     render() {
         return (
             <section>
-                <div styles={{textAlign:"center"}}>
-                    <div styles={{display:"inline-block"}}>Votre Panier</div>
+                <div>
+                    <div style={{margin:"10px 44%", fontWeight:"bold"}}>Votre Panier</div>
+                </div>
+                <div>
                     <ListBasket dataProduct={productDatabase}/>
                 </div>
             </section>
