@@ -35,8 +35,7 @@ export function ListBasket (props){
 
     const methodeFetchOnClick = () => {
         axios.post('/api/create_session', {
-            basket: 'TOTO CONNARD'
-            
+            basket: context.basket
         }).then(function (response){
             console.log(response);
         })
