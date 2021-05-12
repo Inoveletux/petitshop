@@ -1,10 +1,10 @@
 const express = require('express')
+require('dotenv').config();
 const stripe = require('stripe')(process.env.API_KEY_HIDDEN);
 const app = express()
 const port = 4242
 const bodyParser = require('body-parser')
 //Sert a utiliser les variables d'environnement
-require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
