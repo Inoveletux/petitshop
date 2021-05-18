@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState }  from 'react';
-import {AppContext} from '../Context.js'
+import {AppContext} from '../Context.js';
 import {ListGroup, Button} from 'react-bootstrap';
-import {findProduct} from '../lib/database'
-import axios from 'axios'
+import {findProduct} from '../lib/database';
+import axios from 'axios';
+import {loadStripe} from '@stripe/stripe-js';
+
 
 export function ListBasket (props){
     const [invoiceLines, setInvoiceLines] = useState([]);
     const context = useContext(AppContext);
     let priceTotalProducts = [0];
-
+    const stripePromise = loadStripe('pk_test_51CMcNmJVGoMEPv9q6VFNQ5VDRXbhdc1Cy5vwHGAr2jvjGw2Wpm0EI2kV8wxcJTD90DStXsQ1aeq4et8cFXpS4Qci00CkEQV8ku');
+    
     useEffect(() => {
         setInvoiceLines(context.basket.map((basketItem) => {
             /*
@@ -34,14 +37,14 @@ export function ListBasket (props){
     }
 
     const methodeFetchOnClick = () => {
+    stripePromise.then(function (machinChose) {
         axios.post('/api/create_session', {
             basket: context.basket
         }).then(function (response){
             console.log(response);
+            return machinChose.redirectToCheckout({ sessionId: response.data.id });
         })
-            .catch(function (error) {
-            console.log(error);
-        })
+    })
     }
 
     const methodeReduce = () => {

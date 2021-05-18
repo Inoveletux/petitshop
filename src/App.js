@@ -13,6 +13,7 @@ import Product from './pages/Product';
 import {NavBar} from './components/NavBar.jsx';
 // Contexte de l'application
 import {AppContext} from './Context.js';
+import {ErrorStripe} from './components/ErrorStripe'
 
 
 export default class App extends React.Component {
@@ -54,6 +55,12 @@ export default class App extends React.Component {
                         </Route>
                         <Route exact path="/product/:code">
                             <Product/>
+                        </Route>
+                        <Route exact path="/success">
+                            <Home/>
+                        </Route>
+                        <Route exact path="/error">
+                            <ErrorStripe/>
                         </Route>
                     </Switch>
                 </BrowserRouter>
